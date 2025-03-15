@@ -27,6 +27,17 @@
             color: var(--dark);
             line-height: 1.6;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent), var(--highlight));
+            z-index: 1000;
+            transition: width 0.3s;
         }
         
         .container {
@@ -68,6 +79,49 @@
         .nav-links {
             display: flex;
             list-style: none;
+        }
+
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .burger-bar {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 2px;
+            transition: 0.3s;
+        }
+
+        @media screen and (max-width: 768px) {
+            .burger-menu {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+                width: 70%;
+                height: 100vh;
+                padding: 2rem;
+                transition: 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
         }
         
         .nav-links li {
@@ -875,6 +929,86 @@
                 }
             }
 
+            // Add scroll indicator
+            const scrollIndicator = document.createElement('div');
+            scrollIndicator.className = 'scroll-indicator';
+            document.body.appendChild(scrollIndicator);
+
+            // Update scroll indicator width
+            window.addEventListener('scroll', () => {
+                const winScroll = document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                scrollIndicator.style.width = scrolled + '%';
+            });
+
+            // Smooth scroll with animation for nav links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Create ripple effect
+                        const ripple = document.createElement('div');
+                        ripple.style.position = 'fixed';
+                        ripple.style.width = '20px';
+                        ripple.style.height = '20px';
+                        ripple.style.borderRadius = '50%';
+                        ripple.style.backgroundColor = 'var(--accent)';
+                        ripple.style.opacity = '0.6';
+                        ripple.style.pointerEvents = 'none';
+                        ripple.style.left = e.clientX - 10 + 'px';
+                        ripple.style.top = e.clientY - 10 + 'px';
+                        ripple.style.transition = 'transform 0.6s, opacity 0.6s';
+                        document.body.appendChild(ripple);
+
+                        // Animate ripple
+                        requestAnimationFrame(() => {
+                            ripple.style.transform = 'scale(50)';
+                            ripple.style.opacity = '0';
+                        });
+
+                        // Remove ripple after animation
+                        setTimeout(() => ripple.remove(), 600);
+
+                        // Smooth scroll to target
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                        // Add highlight effect to section
+                        targetElement.style.transition = 'transform 0.3s, box-shadow 0.3s';
+                        targetElement.style.transform = 'scale(0.99)';
+                        targetElement.style.boxShadow = '0 0 20px rgba(76, 201, 240, 0.3)';
+
+                        setTimeout(() => {
+                            targetElement.style.transform = '';
+                            targetElement.style.boxShadow = '';
+                        }, 300);
+                    }
+                });
+            });
+
+            // Burger menu functionality
+            const burgerMenu = document.querySelector('.burger-menu');
+            const navLinks = document.querySelector('.nav-links');
+
+            burgerMenu.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+
+            // Close navigation when clicking a link on mobile
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+
             // Close form when clicking outside
             document.addEventListener('click', (e) => {
                 const form = document.getElementById('contactForm');
@@ -905,6 +1039,11 @@
         <div class="container navbar">
             <div class="logo">Ajay</div>
             <nav>
+                <div class="burger-menu">
+                    <div class="burger-bar"></div>
+                    <div class="burger-bar"></div>
+                    <div class="burger-bar"></div>
+                </div>
                 <ul class="nav-links">
                     <li><a href="#about">About</a></li>
                     <li><a href="#skills">Skills</a></li>
