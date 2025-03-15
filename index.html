@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajay Renganathan | Portfolio</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --highlight: #f72585;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .logo::after {
+            content: '.';
+            color: var(--accent);
+            font-size: 2.5rem;
+            position: absolute;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 0;
+            background-color: #f8f9fa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            z-index: 0;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: rgba(76, 201, 240, 0.1);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 0.9rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(67, 97, 238, 0.4);
+        }
+        
+        .about-section {
+            padding: 6rem 0;
+        }
+        
+        .about-section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+        
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .skill-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            border-top: 4px solid transparent;
+        }
+        
+        .skill-card:nth-child(1) {
+            border-top-color: var(--primary);
+        }
+        
+        .skill-card:nth-child(2) {
+            border-top-color: var(--highlight);
+        }
+        
+        .skill-card:nth-child(3) {
+            border-top-color: var(--accent);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-card h3 {
+            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .skill-card h3::before {
+            content: "〜";
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-img {
+            height: 200px;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-info h3 {
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            padding: 6rem 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .contact-section .section-title {
+            color: white;
+        }
+        
+        .contact-section .section-title::after {
+            background: var(--accent);
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+        }
+        
+        .contact-links a {
+            color: white;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+        }
+        
+        .contact-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        footer p {
+            margin-bottom: 1rem;
+        }
+        
+        .emoji {
+            display: inline-block;
+            transform-origin: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Project placeholder styles */
+        .projects-coming {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .projects-coming h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .skills, .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <div class="logo">Ajay</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Hello, I'm Ajay Renganathan</h1>
+            <p>I create elegant solutions through code and innovation. Passionate about building technology that makes a difference.</p>
+            <a href="#contact" class="btn">Let's Connect</a>
+        </div>
+    </section>
+    
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p>
+                I'm a passionate software engineer and technology enthusiast with a creative approach to problem-solving. With a keen eye for detail and a love for clean code, I transform complex challenges into elegant solutions. My journey in technology is driven by curiosity and a continuous desire to learn and grow in this ever-evolving digital landscape.
+            </p>
+            <p style="margin-top: 1.5rem">
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the tech community. I believe in building technology that not only works flawlessly but also creates meaningful experiences for users.
+            </p>
+        </div>
+    </section>
+    
+    <section id="skills" class="about-section">
+        <div class="container">
+            <h2 class="section-title">My Skills</h2>
+            <div class="skills">
+                <div class="skill-card">
+                    <h3>Software Engineering</h3>
+                    <p>Proficient in developing robust, scalable applications with clean architecture and modern design patterns. Experienced in full-stack development with a focus on performance optimization and maintainable code that stands the test of time.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Tinkering with Technology</h3>
+                    <p>Passionate about exploring new technologies and hardware solutions. From custom-built PCs to IoT devices, I enjoy dissecting systems to understand their inner workings and finding creative ways to enhance them and push boundaries.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Problem Solving</h3>
+                    <p>Analytical thinker with a knack for breaking down complex challenges into manageable components. I approach problems methodically, considering multiple perspectives to arrive at innovative solutions that address both technical and user needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="about-section">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-img">Project Preview</div>
+                    <div class="project-info">
+                        <h3>Smart Home Automation</h3>
+                        <p>A comprehensive IoT solution that connects and automates household devices through a centralized dashboard with machine learning capabilities.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">Project Preview</div>
+                    <div class="project-info">
+                        <h3>E-Commerce Platform</h3>
+                        <p>A scalable online marketplace featuring real-time inventory management, secure payment processing, and a personalized shopping experience.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-img">Project Preview</div>
+                    <div class="project-info">
+                        <h3>Data Visualization Tool</h3>
+                        <p>An interactive dashboard that transforms complex datasets into intuitive visualizations, helping businesses make data-driven decisions efficiently.</p>
+                    </div>
