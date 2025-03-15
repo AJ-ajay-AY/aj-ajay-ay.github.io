@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajay Renganathan | Portfolio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --primary: #4361ee;
@@ -38,8 +39,9 @@
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             padding: 1.5rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
+            width: 100%;
             z-index: 100;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
@@ -96,14 +98,12 @@
         }
         
         .hero {
+            position: relative;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 8rem 0;
             background-color: #f8f9fa;
-            position: relative;
             overflow: hidden;
         }
         
@@ -134,8 +134,34 @@
         .hero-content {
             position: relative;
             z-index: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            padding: 4rem 0;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
         }
         
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
@@ -148,7 +174,14 @@
         .hero p {
             font-size: 1.3rem;
             max-width: 700px;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
         }
         
         .btn {
@@ -195,6 +228,317 @@
             border-radius: 2px;
         }
         
+        .floating-logos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+        }
+
+        .hero {
+            position: relative;
+            height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.5s ease-in-out;
+            margin-top: 80px;
+        }
+
+        .hero.form-active {
+            transform: translateX(-25%) scale(0.95);
+            filter: blur(2px);
+        }
+
+        .scroll-prompt {
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            color: var(--accent);
+            font-size: 2rem;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 4rem;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .scroll-prompt:hover {
+            opacity: 1;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .contact-form {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100vh;
+            background: var(--light);
+            padding: 4rem;
+            box-shadow: -10px 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transition: all 0.5s ease-in-out;
+            overflow-y: auto;
+            transform: translateX(100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+        }
+
+        .contact-form h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.1);
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+
+        .contact-form.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            background: var(--background-light);
+            color: var(--text);
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-form button:hover {
+            background: var(--secondary);
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--background-light);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .hero {
+            position: relative;
+        }
+
+        .tech-logo {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            opacity: 0.15;
+            transition: all 0.4s ease;
+            pointer-events: auto;
+            cursor: pointer;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: grayscale(100%) brightness(0.7);
+            backdrop-filter: blur(2px);
+            z-index: 1;
+        }
+
+        .tech-logo:hover {
+            transform: scale(2);
+            opacity: 1;
+            z-index: 100;
+            filter: grayscale(0%) brightness(1);
+            box-shadow: 0 0 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .tech-logo .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            pointer-events: none;
+        }
+
+        .tech-logo:hover .tooltip {
+            opacity: 1;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .certifications {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .certification-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .certification-image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            padding: 1rem;
+        }
+
+        .certification-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
         .skills {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -379,82 +723,319 @@
                 gap: 1rem;
             }
         }
-    </style>
+        </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const techLogos = {
+                'Python': 'python.png',
+                'JavaScript': 'javascript.png',
+                'AWS': 'aws.png',
+                'Docker': 'docker.png',
+                'Kubernetes': 'kubernetes.png',
+                'MongoDB': 'mongodb.png',
+                'PostgreSQL': 'postgresql.png',
+                'Elasticsearch': 'elasticsearch.png',
+                'Terraform': 'terraform.png',
+                'Flask': 'flask.png',
+                'Django': 'django.png',
+                'FastAPI': 'fastapi.svg',
+                'Kafka': 'kafka.png',
+                'GitHub': 'github.png'
+            };
+
+            // Function to create and animate a logo
+            function createAnimatedLogo(tech, logoFile, index, total) {
+                const logo = document.createElement('div');
+                logo.className = 'tech-logo';
+                
+                // Calculate evenly spaced positions
+                const rows = Math.ceil(Math.sqrt(total));
+                const cols = Math.ceil(total / rows);
+                const row = Math.floor(index / cols);
+                const col = index % cols;
+                
+                const xPos = (col / (cols - 1)) * 80 + 10;
+                const yPos = (row / (rows - 1)) * 60 + 20;
+                
+                logo.style.left = xPos + '%';
+                logo.style.top = yPos + '%';
+                logo.style.backgroundImage = `url('assets/images/tech-logos/${logoFile}')`;
+
+                const tooltip = document.createElement('div');
+                tooltip.className = 'tooltip';
+                tooltip.textContent = tech;
+                logo.appendChild(tooltip);
+
+                const scale = 0.8 + Math.random() * 0.4;
+                const duration = 25 + Math.random() * 35;
+                const xDistance = 30 + Math.random() * 50;
+                const yDistance = 30 + Math.random() * 50;
+                const delay = Math.random() * -duration;
+                const rotation = Math.random() * 360;
+
+                const animation = logo.animate([
+                    { transform: `scale(${scale}) translate(0, 0) rotate(${rotation}deg)`, opacity: 0.2 },
+                    { transform: `scale(${scale}) translate(${xDistance}px, ${yDistance}px) rotate(${rotation + 360}deg)`, opacity: 0.3 }
+                ], {
+                    duration: duration * 1000,
+                    iterations: Infinity,
+                    direction: 'alternate',
+                    easing: 'ease-in-out',
+                    delay: delay * 1000
+                });
+
+                logo.animation = animation;
+
+                logo.addEventListener('mouseenter', () => {
+                    document.querySelectorAll('.tech-logo').forEach(l => {
+                        if (l.animation) {
+                            l.animation.pause();
+                            l.style.opacity = '0.1';
+                        }
+                    });
+                    logo.style.opacity = '1';
+                    logo.style.filter = 'grayscale(0%)';
+                    logo.style.transform = 'scale(2)';
+                    logo.style.zIndex = '100';
+                });
+
+                logo.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.tech-logo').forEach(l => {
+                        if (l.animation) {
+                            l.animation.play();
+                            l.style.opacity = '0.15';
+                        }
+                    });
+                    logo.style.filter = 'grayscale(100%)';
+                    logo.style.transform = 'scale(1)';
+                    logo.style.zIndex = '1';
+                });
+
+                return logo;
+            }
+
+            const container = document.getElementById('floatingLogos');
+            
+            // Calculate total number of logos
+            const totalLogos = Object.keys(techLogos).length * 2;
+            let logoIndex = 0;
+
+            // Create and animate the logos
+            Object.entries(techLogos).forEach(([tech, logoFile]) => {
+                // Create 2 instances of each logo
+                for (let i = 0; i < 2; i++) {
+                    const logo = createAnimatedLogo(tech, logoFile, logoIndex, totalLogos);
+                    container.appendChild(logo);
+                    logoIndex++;
+                }
+            });
+
+            // Collision detection
+            function checkCollision(logo1, logo2) {
+                const rect1 = logo1.getBoundingClientRect();
+                const rect2 = logo2.getBoundingClientRect();
+                return !(rect1.right < rect2.left || 
+                        rect1.left > rect2.right || 
+                        rect1.bottom < rect2.top || 
+                        rect1.top > rect2.bottom);
+            }
+
+            // Update logo positions and handle collisions
+            setInterval(() => {
+                const logos = document.querySelectorAll('.tech-logo');
+                logos.forEach(logo1 => {
+                    logos.forEach(logo2 => {
+                        if (logo1 !== logo2 && checkCollision(logo1, logo2)) {
+                            // Reverse animation direction on collision
+                            if (logo1.animation) logo1.animation.reverse();
+                            if (logo2.animation) logo2.animation.reverse();
+                        }
+                    });
+                });
+            }, 100);
+
+            // Handle contact form
+            function toggleContactForm(show) {
+                const hero = document.querySelector('.hero');
+                const form = document.getElementById('contactForm');
+                const overlay = document.getElementById('overlay');
+                
+                if (show) {
+                    requestAnimationFrame(() => {
+                        document.body.style.overflow = 'hidden';
+                        hero.classList.add('form-active');
+                        form.classList.add('active');
+                        overlay.classList.add('active');
+                    });
+                } else {
+                    document.body.style.overflow = '';
+                    hero.classList.remove('form-active');
+                    form.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            }
+
+            // Close form when clicking outside
+            document.addEventListener('click', (e) => {
+                const form = document.getElementById('contactForm');
+                const overlay = document.getElementById('overlay');
+                if (e.target === overlay) {
+                    toggleContactForm(false);
+                }
+            });
+
+            document.getElementById('messageForm')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = e.target.querySelector('input[type="email"]').value;
+                const message = e.target.querySelector('textarea').value;
+                
+                // Here you would typically send this to your backend
+                console.log('Message received:', { email, message });
+                
+                // Show success message and close form
+                alert('Thank you for your message! I will get back to you soon.');
+                e.target.reset();
+                toggleContactForm(false);
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
         <div class="container navbar">
             <div class="logo">Ajay</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
-    
+
+    <div id="overlay" class="overlay"></div>
     <section class="hero">
-        <div class="container hero-content">
-            <h1>Hello, I'm Ajay Renganathan</h1>
-            <p>I create elegant solutions through code and innovation. Passionate about building technology that makes a difference.</p>
-            <a href="#contact" class="btn">Let's Connect</a>
+        <div class="floating-logos" id="floatingLogos"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>I am Ajay Renganathan</h1>
+                <p>A passionate software engineer specializing in cloud architecture and DevOps</p>
+                <a href="#" class="btn" onclick="toggleContactForm(true); event.preventDefault();">Get in Touch</a>
+            </div>
+            <div class="scroll-prompt" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
+                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-down" style="margin-top: -0.5rem;"></i>
+            </div>
         </div>
     </section>
-    
+
     <section id="about" class="about-section">
         <div class="container">
             <h2 class="section-title">About Me</h2>
             <p>
-                I'm a passionate software engineer and technology enthusiast with a creative approach to problem-solving. With a keen eye for detail and a love for clean code, I transform complex challenges into elegant solutions. My journey in technology is driven by curiosity and a continuous desire to learn and grow in this ever-evolving digital landscape.
+                I'm a passionate software engineer and technology enthusiast with expertise in cloud architecture and DevOps practices. With a keen eye for detail and a love for automation, I transform complex infrastructure challenges into elegant, scalable solutions.
             </p>
             <p style="margin-top: 1.5rem">
-                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the tech community. I believe in building technology that not only works flawlessly but also creates meaningful experiences for users.
+                My focus lies in building robust cloud architectures, implementing efficient CI/CD pipelines, and ensuring high availability and reliability of systems. I'm constantly exploring new technologies and best practices in the ever-evolving landscape of cloud computing and DevOps.
             </p>
         </div>
     </section>
-    
+
     <section id="skills" class="about-section">
         <div class="container">
             <h2 class="section-title">My Skills</h2>
             <div class="skills">
                 <div class="skill-card">
+                    <h3>Cloud Architecture & DevOps</h3>
+                    <p>Extensive experience with AWS services, containerization, and infrastructure as code. Proficient in designing and implementing scalable, secure, and highly available cloud solutions.</p>
+                </div>
+                <div class="skill-card">
                     <h3>Software Engineering</h3>
-                    <p>Proficient in developing robust, scalable applications with clean architecture and modern design patterns. Experienced in full-stack development with a focus on performance optimization and maintainable code that stands the test of time.</p>
+                    <p>Strong foundation in Python, JavaScript, and various backend frameworks. Experienced in developing microservices, RESTful APIs, and data pipelines.</p>
                 </div>
                 <div class="skill-card">
-                    <h3>Tinkering with Technology</h3>
-                    <p>Passionate about exploring new technologies and hardware solutions. From custom-built PCs to IoT devices, I enjoy dissecting systems to understand their inner workings and finding creative ways to enhance them and push boundaries.</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Problem Solving</h3>
-                    <p>Analytical thinker with a knack for breaking down complex challenges into manageable components. I approach problems methodically, considering multiple perspectives to arrive at innovative solutions that address both technical and user needs.</p>
+                    <h3>Infrastructure Automation</h3>
+                    <p>Expert in infrastructure automation using Terraform, Docker, and Kubernetes. Skilled in implementing GitOps practices and maintaining CI/CD pipelines.</p>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <section id="projects" class="about-section">
         <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="projects-grid">
                 <div class="project-card">
-                    <div class="project-img">Project Preview</div>
-                    <div class="project-info">
-                        <h3>Smart Home Automation</h3>
-                        <p>A comprehensive IoT solution that connects and automates household devices through a centralized dashboard with machine learning capabilities.</p>
+                    <img src="assets/images/project1.jpg" alt="Cloud Infrastructure Project" class="project-image">
+                    <div class="project-content">
+                        <h3>Cloud Infrastructure Automation</h3>
+                        <p>Automated cloud infrastructure deployment using Terraform and AWS services</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-img">Project Preview</div>
-                    <div class="project-info">
-                        <h3>E-Commerce Platform</h3>
-                        <p>A scalable online marketplace featuring real-time inventory management, secure payment processing, and a personalized shopping experience.</p>
+                    <img src="assets/images/project2.jpg" alt="Microservices Project" class="project-image">
+                    <div class="project-content">
+                        <h3>Microservices Architecture</h3>
+                        <p>Designed and implemented scalable microservices using Kubernetes and Docker</p>
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-img">Project Preview</div>
-                    <div class="project-info">
-                        <h3>Data Visualization Tool</h3>
-                        <p>An interactive dashboard that transforms complex datasets into intuitive visualizations, helping businesses make data-driven decisions efficiently.</p>
+                    <img src="assets/images/project3.jpg" alt="Data Pipeline Project" class="project-image">
+                    <div class="project-content">
+                        <h3>Data Pipeline Engineering</h3>
+                        <p>Built robust data pipelines using Apache Kafka and ELK Stack</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="about-section">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-info">
+                <a href="www.linkedin.com/in/ajay-renganathan" class="contact-item" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="mailto:ajay.renganathan@gmail.com" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+                <a href="tel:+919597369901" class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>Phone</span>
+                </a>
+            </div>
+            <div class="contact-form" id="contactForm">
+                <h3>Send me a message</h3>
+                <form id="messageForm">
+                    <input type="email" placeholder="Your email" required>
+                    <textarea placeholder="Your message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="about-section">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications">
+                <div class="certification-card">
+                    <img src="assets/images/certifications/aws-solutions-architect.png" alt="AWS Solutions Architect" class="certification-image">
+                    <div class="certification-content">
+                        <h3>AWS Certified Solutions Architect</h3>
+                        <p>Professional certification validating expertise in AWS cloud architecture</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    
+
